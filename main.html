@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>Reyes MQTT3</title>
+</head>
+
+
+<body style="max-width:100%; max-height:100%">
+    <center>
+        <h2 style="margin-top: 40px; ">Leslie Marie Reyes: Publish/Subscribe Web Client</h2>
+    </center><br>
+
+
+    <div class="cards-list">
+
+
+        <div class="card card1" style=" width: 370px; ">
+            <div class="card_image ">
+                <div class="card-body">
+                    <center>
+                        <h5 class="card-title text-light"><strong>Address</strong></h5>
+                    </center>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><img
+                                    src="chat.png" alt=""
+                                    style="width: 20px;"></span>
+                        </div>
+                        <input type="text" readonly class="form-control" value="wss://mqtt.eclipseprojects.io:443/mqtt" aria-label="Topic" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group">
+                            <button id="connect" class="btn btn-info btn-md mt-2">Connect <ion-icon
+                                    name="wifi-outline"></ion-icon> <span><button id="disconnect"
+                                        class="btn btn-warning btn-md ml-2 mt-2">Disconnect <ion-icon
+                                            name="log-out-outline"></ion-icon></button></span>
+                            </button>
+                        </div>
+                        <div class="input-group">
+                            <h6 class="card-title text-light mt-4"><strong>Status</strong></h6>
+                        </div>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><img
+                                    src="checklist.png" alt=""
+                                    style="width: 20px;"></span>
+                        </div>
+                        <input type="text" id="status" readonly class="form-control" placeholder="" value="" aria-label="Payload" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card card1 " style="width: 350px; ">
+            <div class="card_image ">
+                <div class="card-body ">
+                    <center>
+                        <h5 class="card-title text-light ">Publish</h5><br>
+                    </center>
+                    <center>
+
+                        <div class="input-group mb-3 " style="width: 250px; ">
+                            <div class="input-group-prepend ">
+                                <span class="input-group-text " id="basic-addon1 "><img src="../sd190-mqttjs-javascript-resources/checklist.png " alt=" " style="width: 20px; "></span>
+                            </div>
+                            <input type="text " class="form-control pubTopic" name="pubTopic" placeholder=" Topic " aria-label="Topic " aria-describedby="basic-addon1 " required>
+                        </div>
+                        <br>
+                        <div class="input-group mb-3 " style="width:250px; ">
+                            <div class="input-group-prepend ">
+                                <span class="input-group-text " id="basic-addon1 "><img src="../sd190-mqttjs-javascript-resources/chat.png " alt=" " style="width: 20px; "></span>
+                            </div>
+                            <input type="text" class="form-control pubPayload" name="pubPayload" placeholder="Payload " aria-label="Payload " aria-describedby="basic-addon1 " required>
+                        </div>
+
+                        <div class="input-group mt-4 " style="margin-left: 68%; ">
+                            <button class="btn btn-info btn-md publishBtn">Publish <ion-icon name="send-outline "></ion-icon></button>
+                        </div>
+                    </center>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="card card2 " style="width: 350px; ">
+            <div class="card_image ">
+                <div class="card-body ">
+
+                    <center>
+                        <h5 class="card-title text-light ">Subscribe</h5><br>
+                    </center>
+
+                    <center>
+                        <div class="input-group mb-3 " style="width: 250px; ">
+                            <div class="input-group-prepend ">
+                                <span class="input-group-text " id="basic-addon1 "><img src="../sd190-mqttjs-javascript-resources/checklist.png " alt=" " style="width: 20px; "></span>
+                            </div>
+                            <input type="text" id="subTopics" class="form-control" placeholder="Topic " aria-label="Topic " aria-describedby="basic-addon1 " required>
+                        </div><br><br>
+
+                        <div class="input-group mt-4 " style="margin-left:20%; ">
+                            <span><button id="subButton" class="btn btn-info btn-md" style="margin-right:10px; ">Subscribe <ion-icon name="chevron-forward-circle-outline "></ion-icon></button></span>
+                            <span><button id="unsubscribeBtn " class="btn btn-info btn-md ">Unsubscribe <ion-icon name="chevron-forward-circle-outline "></ion-icon></button></span>
+                        </div>
+
+                    </center>
+                    <br><br>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+    <div class="cards-list ">
+
+        <div class="card card3 " style="width:350px; " id="messages ">
+
+            <div class="card-body card_image ">
+                <table class="table table-hover text-light " id="msgDisplay ">
+                    <h5 style=" margin-top: 30px; ">Incoming Messages <span><button class="btn btn-info btn-md "onclick="deleteRowMsg(this) " id="clearIncoming " style="float: right; ">Clear</button></span> </h5>
+
+                    <thead>
+                        <tr>
+                            <th scope="col ">Topic</th>
+                            <th scope="col ">Payload</th>
+                            <th scope="col ">Time Stamp</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="messageTable">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card card3 " style="width:350px; ">
+
+            <div class="card-body card_image ">
+                <table class="table table-hover text-light">
+                    <h5 style=" margin-top: 30px; ">Published Message <span><button class="btn btn-info btn-md" onclick="deleteRowPub(this) " id="clearPub " style="float: right; ">Clear</button></span> </h5>
+
+                    <thead>
+                        <tr>
+                            <th scope="col ">Topic</th>
+                            <th scope="col ">Payload</th>
+                            <th scope="col ">Time Stamp</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="pubTable" id="pubTables" style="overflow: scroll;height: 100px;">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card card4 " style="width:350px; ">
+
+            <div class="card-body card_image ">
+                <table class="table table-hover text-light " id="subTable ">
+                    <h5 style=" margin-top: 30px; ">Subscribed Message <span><button class="btn btn-info btn-md "onclick="deleteRowSub(this) " id="clearSub " style="float: right; ">Clear</button></span> </h5>
+
+                    <thead>
+                        <tr>
+                            <th scope="col ">Topic</th>
+                            <th scope="col ">Time Stamp</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="subTables">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</body>
+<style>
+    body {
+        background-image: url(" ./bg.gif ");
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    
+    h2,
+    h5 {
+        color: white;
+    }
+    
+    .cards-list {
+        margin-top: 50px;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+    
+    .card {
+        margin: 20px auto;
+        width: 450px;
+        height: 300px;
+        border-radius: 40px;
+        box-shadow: 5px 5px 30px 7px rgba(0, 0, 0, 0.25), -5px -5px 30px 7px rgba(0, 0, 0, 0.22);
+    }
+    
+    .card .card_image {
+        width: inherit;
+        height: inherit;
+        border-radius: 40px;
+    }
+    /* for border */
+    
+    .card .card_image img {
+        width: inherit;
+        height: inherit;
+        border-radius: 40px;
+        object-fit: cover;
+    }
+    /* for card background  */
+    
+    .card_image {
+        background-image: url("https://i.redd.it/b3esnz5ra34y.jpg ");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    
+    .card .card_title {
+        text-align: center;
+        border-radius: 0px 0px 40px 40px;
+        font-family: sans-serif;
+        font-weight: bold;
+        font-size: 30px;
+        margin-top: -80px;
+        height: 40px;
+    }
+    
+    .card:hover {
+        box-shadow: 5px 5px 30px 15px rgba(0, 0, 0, 0.25), -5px -5px 30px 15px rgba(0, 0, 0, 0.22);
+    }
+</style>
+
+<!-- 
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js "></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js "></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js "></script> -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js "></script> -->
+<script src="./browserMqtt.js "></script>
+<script src="./main.js "></script>
+<script>
+    console.log("main.js");
+
+    var client = mqtt.connect('wss://mqtt.eclipseprojects.io:443/mqtt');
+
+
+    $("#connect").on('click', function() {
+        $("#status").val("Connecting..")
+        client.on('connect', function() {
+            $("#status").val("Connected Successfully")
+            console.log("Connected Succesfully!")
+
+        })
+
+        topic = $("#pubTopic").val()
+        message = $("#pubPayload").val()
+
+        client.on('message', function(topic, message) {
+            var date = new Date()
+            var time = (date.toDateString() + " " + date.toLocaleTimeString())
+            if (topic == $('#sub-topic').val()) {
+                $("#brokerTable").prepend(
+                    "<tr><td>" +
+                    topic +
+                    "</td><td>" +
+                    message.toString() +
+                    "</td><td>" +
+                    time +
+                    "</td><td>"
+                );
+            }
+        });
+    });
+
+    $("#publishBtn").on('click', function() {
+        var pubTopic = $("#pubTopic").val()
+        var payload = $("#pubPayload").val()
+        var pubDate = new Date()
+        var pubTime = (pubDate.toDateString() + " " + pubDate.toLocaleTimeString())
+        client.publish(pubTopic, payload)
+        $("#pubTable").prepend(
+            "<tr><td>" +
+            pubTopic +
+            "</td><td>" +
+            payload +
+            "</td><td>" +
+            pubTime +
+            "</td></tr>"
+        );
+    });
+
+    $("#subscribeBtn").on('click', function() {
+        var subTopic = $("#subTopic").val()
+        var subDate = new Date()
+        var subTime = (subDate.toDateString() + " " + subDate.toLocaleTimeString())
+        client.subscribe(subTopic)
+        $("#subTable").prepend(
+            "<tr><td>" +
+            subTopic +
+            "</td><td>" +
+            subTime +
+            "</td></tr>"
+        );
+
+    });
+</script>
+
+</html>
